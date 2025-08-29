@@ -26,8 +26,12 @@
   },
   "homepage": "https://github.com/GameDevCompanyName/CamingGearBot#readme",
   "dependencies": {
+    "@types/lowdb": "^1.0.15",
+    "@types/uuid": "^10.0.0",
     "dotenv": "^17.2.1",
-    "telegraf": "^4.16.3"
+    "lowdb": "^1.0.0",
+    "telegraf": "^4.16.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

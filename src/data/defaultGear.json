@@ -1,0 +1,48 @@
+{
+    "gear": [
+        {
+            "dependantOnPeople": true,
+            "item": {
+                "name": "Спальник",
+                "qty": 1,
+                "emoji": "🛌"
+            }
+        },
+        {
+            "dependantOnPeople": false,
+            "item": {
+                "name": "Палатка",
+                "qty": 1,
+                "emoji": "🏕️"
+            }
+        },
+        {
+            "dependantOnPeople": false,
+            "item": {
+                "name": "Аптечка",
+                "qty": 1,
+                "emoji": "🧰"
+            }
+        }
+    ],
+    "products": [
+        {
+            "dependantOnPeople": true,
+            "item": {
+                "name": "Вода",
+                "qty": 2,
+                "unit": "Л",
+                "emoji": "💧"
+            }
+        },
+        {
+            "dependantOnPeople": true,
+            "item": {
+                "name": "Туалетная бумага",
+                "qty": 1,
+                "unit": "ШТ",
+                "emoji": "🧻"
+            }
+        }
+    ]
+}

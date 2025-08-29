@@ -1,0 +1,37 @@
+{
+  "name": "caminggearbot",
+  "version": "0.1.0",
+  "description": "Бот для генерации списка продуктов и снаряжения для походов и кемпингов",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "start:prod": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GameDevCompanyName/CamingGearBot.git"
+  },
+  "keywords": [
+    "camping",
+    "telegram",
+    "bot",
+    "gear",
+    "hiking"
+  ],
+  "author": "Igorlo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GameDevCompanyName/CamingGearBot/issues"
+  },
+  "homepage": "https://github.com/GameDevCompanyName/CamingGearBot#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

@@ -5,6 +5,8 @@ import dishesData from '../data/dishes.json';
 
 class ListService {
     private readonly MAX_LISTS_PER_USER = 10;
+    private readonly MAX_DAYS = 14;
+    private readonly MAX_PEOPLE = 30;
 
     async createNewList(userId: string): Promise<CampingList | null> {
         const listCount = await storageService.getUserListCount(userId);
@@ -75,11 +77,13 @@ class ListService {
 
     async updatePeopleCount(userId: string, listId: number, people: number): Promise<void> {
         if (people <= 0) throw new Error('Количество людей должно быть больше 0');
+        if (people > this.MAX_PEOPLE) throw new Error(`Максимальное количество людей: ${this.MAX_PEOPLE}`);
         await storageService.updateList(userId, listId, { people });
     }
 
     async updateDays(userId: string, listId: number, days: number): Promise<void> {
         if (days <= 0) throw new Error('Количество дней должно быть больше 0');
+        if (days > this.MAX_DAYS) throw new Error(`Максимальное количество дней: ${this.MAX_DAYS}`);
         
         const list = await storageService.getList(userId, listId);
         if (list) {

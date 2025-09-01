@@ -1,167 +1,352 @@
 {
-    "baseGear": {
-        "gear": [
-            {
-                "dependantOnPeople": true,
-                "item": {
-                    "name": "Спальник",
-                    "qty": 1,
-                    "emoji": "🛌"
-                }
-            },
-            {
-                "dependantOnPeople": false,
-                "item": {
-                    "name": "Палатка",
-                    "qty": 1,
-                    "emoji": "🏕️"
-                }
-            },
-            {
-                "dependantOnPeople": false,
-                "item": {
-                    "name": "Аптечка",
-                    "qty": 1,
-                    "emoji": "🧰"
-                }
-            }
-        ],
-        "products": [
-            {
-                "dependantOnPeople": true,
-                "item": {
-                    "name": "Вода",
-                    "qty": 2,
-                    "unit": "Л",
-                    "emoji": "💧"
-                }
-            },
-            {
-                "dependantOnPeople": true,
-                "item": {
-                    "name": "Туалетная бумага",
-                    "qty": 1,
-                    "unit": "ШТ",
-                    "emoji": "🧻"
-                }
-            }
-        ]
-    },
-    "conditionalGear": {
-        "rain": {
-            "gear": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Дождевик",
-                        "qty": 1,
-                        "emoji": "☔"
-                    }
-                },
-                {
-                    "dependantOnPeople": false,
-                    "item": {
-                        "name": "Тент",
-                        "qty": 1,
-                        "emoji": "⛺"
-                    }
-                }
-            ],
-            "products": []
-        },
-        "swimming": {
-            "gear": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Купальные принадлежности",
-                        "qty": 1,
-                        "emoji": "�"
-                    }
-                },
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Полотенце",
-                        "qty": 1,
-                        "emoji": "�🧻"
-                    }
-                }
-            ],
-            "products": []
+  "baseGear": {
+    "gear": [
+      {
+        "dependantOnPeople": true,
+        "item": {
+          "name": "Спальник",
+          "qty": 1,
+          "emoji": "🛌"
         }
-    },
-    "temperatureGear": {
-        "cold": {
-            "gear": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Зимняя куртка",
-                        "qty": 1,
-                        "emoji": "🧥"
-                    }
-                },
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Теплые носки",
-                        "qty": 2,
-                        "emoji": "🧦"
-                    }
-                }
-            ],
-            "products": []
-        },
-        "cool": {
-            "gear": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Теплые носки",
-                        "qty": 1,
-                        "emoji": "🧦"
-                    }
-                }
-            ],
-            "products": []
-        },
-        "warm": {
-            "gear": [],
-            "products": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Вода",
-                        "qty": 1,
-                        "unit": "Л",
-                        "emoji": "💧"
-                    }
-                }
-            ]
-        },
-        "hot": {
-            "gear": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Панама",
-                        "qty": 1,
-                        "emoji": "👒"
-                    }
-                }
-            ],
-            "products": [
-                {
-                    "dependantOnPeople": true,
-                    "item": {
-                        "name": "Вода",
-                        "qty": 2,
-                        "unit": "Л",
-                        "emoji": "💧"
-                    }
-                }
-            ]
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Палатка",
+          "qty": 1,
+          "emoji": "🏕️"
         }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Аптечка",
+          "qty": 1,
+          "emoji": "🧰"
+        }
+      },
+      {
+        "dependantOnPeople": true,
+        "item": {
+          "name": "Коврик туристический",
+          "qty": 1,
+          "emoji": "🛏️"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Фонарик",
+          "qty": 1,
+          "emoji": "🔦"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Газовая горелка",
+          "qty": 1,
+          "emoji": "🔥"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Баллон с газом",
+          "qty": 1,
+          "emoji": "🛢️"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Кастрюля",
+          "qty": 1,
+          "emoji": "🥘"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Сковородка",
+          "qty": 1,
+          "emoji": "🍳"
+        }
+      },
+      {
+        "dependantOnPeople": true,
+        "item": {
+          "name": "Посуда (миска, кружка, ложка)",
+          "qty": 1,
+          "emoji": "🍽️"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Нож",
+          "qty": 1,
+          "emoji": "🔪"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Спички/зажигалка",
+          "qty": 1,
+          "emoji": "🔥"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Веревка",
+          "qty": 1,
+          "emoji": "🧵"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Мешки для мусора",
+          "qty": 2,
+          "emoji": "🗑️"
+        }
+      }
+    ],
+    "products": [
+      {
+        "dependantOnPeople": true,
+        "item": {
+          "name": "Вода",
+          "qty": 2,
+          "unit": "Л",
+          "emoji": "💧"
+        }
+      },
+      {
+        "dependantOnPeople": true,
+        "item": {
+          "name": "Туалетная бумага",
+          "qty": 1,
+          "unit": "ШТ",
+          "emoji": "🧻"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Соль",
+          "qty": 0.1,
+          "unit": "КГ",
+          "emoji": "🧂"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Чай",
+          "qty": 0.05,
+          "unit": "КГ",
+          "emoji": "🍵"
+        }
+      },
+      {
+        "dependantOnPeople": false,
+        "item": {
+          "name": "Сахар",
+          "qty": 0.2,
+          "unit": "КГ",
+          "emoji": "🍬"
+        }
+      }
+    ]
+  },
+  "conditionalGear": {
+    "rain": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Дождевик",
+            "qty": 1,
+            "emoji": "☔"
+          }
+        },
+        {
+          "dependantOnPeople": false,
+          "item": {
+            "name": "Тент",
+            "qty": 1,
+            "emoji": "⛺"
+          }
+        }
+      ],
+      "products": []
+    },
+    "swimming": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Купальные принадлежности",
+            "qty": 1,
+            "emoji": "🩱"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Полотенце",
+            "qty": 1,
+            "emoji": "🧻"
+          }
+        }
+      ],
+      "products": []
+    },
+    "fishing": {
+      "gear": [
+        {
+          "dependantOnPeople": false,
+          "item": {
+            "name": "Удочка",
+            "qty": 1,
+            "emoji": "🎣"
+          }
+        },
+        {
+          "dependantOnPeople": false,
+          "item": {
+            "name": "Набор для рыбалки",
+            "qty": 1,
+            "emoji": "🪝"
+          }
+        }
+      ],
+      "products": []
     }
+  },
+  "temperatureGear": {
+    "cold": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Зимняя куртка",
+            "qty": 1,
+            "emoji": "🧥"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Теплые носки",
+            "qty": 2,
+            "emoji": "🧦"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Перчатки",
+            "qty": 1,
+            "emoji": "🧤"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Шапка",
+            "qty": 1,
+            "emoji": "🧢"
+          }
+        }
+      ],
+      "products": []
+    },
+    "cool": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Теплые носки",
+            "qty": 1,
+            "emoji": "🧦"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Толстовка/свитер",
+            "qty": 1,
+            "emoji": "👕"
+          }
+        }
+      ],
+      "products": []
+    },
+    "warm": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Футболка запасная",
+            "qty": 1,
+            "emoji": "👕"
+          }
+        }
+      ],
+      "products": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Вода",
+            "qty": 1,
+            "unit": "Л",
+            "emoji": "💧"
+          }
+        }
+      ]
+    },
+    "hot": {
+      "gear": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Панама",
+            "qty": 1,
+            "emoji": "👒"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Солнцезащитные очки",
+            "qty": 1,
+            "emoji": "🕶️"
+          }
+        },
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Крем от солнца",
+            "qty": 1,
+            "emoji": "🧴"
+          }
+        }
+      ],
+      "products": [
+        {
+          "dependantOnPeople": true,
+          "item": {
+            "name": "Вода",
+            "qty": 2,
+            "unit": "Л",
+            "emoji": "💧"
+          }
+        }
+      ]
+    }
+  }
 }

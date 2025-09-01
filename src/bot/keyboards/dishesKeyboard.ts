@@ -12,7 +12,7 @@ function getTimeOfDayEmoji(timeOfDay: 'breakfast' | 'lunch' | 'dinner'): string 
 export function getMealsKeyboard(listId: number, meals: Meal[]): InlineKeyboardMarkup {
     const buttons = meals.map((meal, index) => {
         return [{
-            text: `День ${meal.dayNumber} - ${getTimeOfDayEmoji(meal.timeOfDay)} ${meal.dish.name}`,
+            text: `День ${meal.dayNumber} - ${getTimeOfDayEmoji(meal.timeOfDay)} - ${meal.dish.name} ${meal.dish.emoji}`,
             callback_data: `select_meal:${listId}:${index}`
         }];
     });
@@ -29,8 +29,6 @@ export function getDishesKeyboard(listId: number, mealIndex: number, dishes: Dis
             callback_data: `select_dish:${listId}:${mealIndex}:${dish.id}`
         }];
     });
-
-    console.log(buttons)
 
     buttons.push([{ text: '⬅️ Назад к приемам пищи', callback_data: `back_to_meals:${listId}` }]);
 

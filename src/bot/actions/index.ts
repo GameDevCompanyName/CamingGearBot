@@ -321,8 +321,17 @@ export function setupActions(bot: Telegraf<MyContext>) {
                         await ctx.reply('Пожалуйста, введите корректное число больше 0');
                         return;
                     }
-                    await listService.updatePeopleCount(userId, listId, people);
-                    await ctx.reply('Количество человек обновлено');
+                    try {
+                        await listService.updatePeopleCount(userId, listId, people);
+                        await ctx.reply('Количество человек обновлено');
+                    } catch (error) {
+                        if (error instanceof Error) {
+                            await ctx.reply(error.message);
+                        } else {
+                            await ctx.reply('Произошла ошибка при обновлении количества человек');
+                        }
+                        return;
+                    }
                     break;
 
                 case 'days':
@@ -331,8 +340,17 @@ export function setupActions(bot: Telegraf<MyContext>) {
                         await ctx.reply('Пожалуйста, введите корректное число больше 0');
                         return;
                     }
-                    await listService.updateDays(userId, listId, days);
-                    await ctx.reply('Количество дней обновлено');
+                    try {
+                        await listService.updateDays(userId, listId, days);
+                        await ctx.reply('Количество дней обновлено');
+                    } catch (error) {
+                        if (error instanceof Error) {
+                            await ctx.reply(error.message);
+                        } else {
+                            await ctx.reply('Произошла ошибка при обновлении количества дней');
+                        }
+                        return;
+                    }
                     break;
             }
         } finally {

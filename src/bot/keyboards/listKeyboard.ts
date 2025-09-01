@@ -1,6 +1,6 @@
 import { InlineKeyboardMarkup } from 'telegraf/typings/core/types/typegram';
 
-export function getListKeyboard(listId: string): InlineKeyboardMarkup {
+export function getListKeyboard(listId: number): InlineKeyboardMarkup {
     return {
         inline_keyboard: [
             [
@@ -23,7 +23,7 @@ export function getListKeyboard(listId: string): InlineKeyboardMarkup {
     };
 }
 
-export function getConditionsKeyboard(listId: string): InlineKeyboardMarkup {
+export function getConditionsKeyboard(listId: number): InlineKeyboardMarkup {
     return {
         inline_keyboard: [
             [

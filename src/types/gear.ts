@@ -11,10 +11,24 @@ export interface DefaultGearItem {
     item: Gear;
 }
 
-export interface DefaultGear {
+export interface GearSet {
     gear: DefaultGearItem[];
     products: {
         dependantOnPeople: boolean;
         item: Product;
     }[];
+}
+
+export interface DefaultGear {
+    baseGear: GearSet;
+    conditionalGear: {
+        rain: GearSet;
+        swimming: GearSet;
+    };
+    temperatureGear: {
+        cold: GearSet;
+        cool: GearSet;
+        warm: GearSet;
+        hot: GearSet;
+    };
 }

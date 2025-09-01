@@ -4,6 +4,7 @@ import { CampingList } from '../types';
 
 interface DbSchema {
     lists: CampingList[];
+    lastId: number;
 }
 
 class StorageService {
@@ -12,17 +13,23 @@ class StorageService {
 
     constructor() {
         this.dbPath = join(__dirname, '../../data/db.json');
-        this.data = { lists: [] };
+        this.data = { lists: [], lastId: 0 };
     }
 
     private async readDb(): Promise<void> {
         try {
             const content = await fs.readFile(this.dbPath, 'utf-8');
             this.data = JSON.parse(content);
+            // Ensure lastId exists
+            if (typeof this.data.lastId !== 'number') {
+                this.data.lastId = this.data.lists.length > 0 
+                    ? Math.max(...this.data.lists.map(l => l.id))
+                    : 0;
+            }
         } catch (error) {
             if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
                 // File doesn't exist, use default empty data
-                this.data = { lists: [] };
+                this.data = { lists: [], lastId: 0 };
             } else {
                 throw error;
             }
@@ -62,7 +69,7 @@ class StorageService {
             }));
     }
 
-    async getList(userId: string, listId: string): Promise<CampingList | undefined> {
+    async getList(userId: string, listId: number): Promise<CampingList | undefined> {
         await this.readDb();
         const list = this.data.lists.find(list => list.userId === userId && list.id === listId);
         if (list) {
@@ -77,11 +84,13 @@ class StorageService {
 
     async createList(list: CampingList): Promise<void> {
         await this.readDb();
+        this.data.lastId++;
+        list.id = this.data.lastId;
         this.data.lists.push(list);
         await this.writeDb();
     }
 
-    async updateList(userId: string, listId: string, updates: Partial<CampingList>): Promise<void> {
+    async updateList(userId: string, listId: number, updates: Partial<CampingList>): Promise<void> {
         await this.readDb();
         const index = this.data.lists.findIndex(list => list.userId === userId && list.id === listId);
         if (index !== -1) {
@@ -94,7 +103,7 @@ class StorageService {
         }
     }
 
-    async deleteList(userId: string, listId: string): Promise<void> {
+    async deleteList(userId: string, listId: number): Promise<void> {
         await this.readDb();
         this.data.lists = this.data.lists.filter(
             list => !(list.userId === userId && list.id === listId)

@@ -4,7 +4,7 @@ import { setupCommands } from './commands';
 import { setupActions } from './actions';
 
 interface SessionData {
-    editingListId?: string;
+    editingListId?: number;
     editingMode?: 'name' | 'people' | 'days' | 'conditions';
 }
 
@@ -22,6 +22,10 @@ export async function setupBot() {
 
     // Middleware
     bot.use(session());
+    bot.use((ctx, next) => {
+        if (!ctx.session) ctx.session = {};
+        return next();
+    });
 
     // Initialize storage
     await storageService.init();

@@ -1,8 +1,40 @@
-import { Telegraf } from 'telegraf';
+import { Telegraf, Context } from 'telegraf';
 import { BotContext } from '../types';
 import { formatBold, formatListItem } from '../../utils/formatters';
 import { listService } from '../../services/listService';
 import { getListKeyboard } from '../keyboards/listKeyboard';
+import { CampingList } from '../../types';
+
+// Выносим функцию отображения списка походов в отдельную, чтобы переиспользовать
+export async function displayListsMessage(ctx: Context, lists: CampingList[], isNewMessage = true) {
+    const message = lists.length === 0 
+        ? 'У тебя пока нет списков.' 
+        : '*Твои списки:*\n\n' + lists.map((list, i) => `${i + 1}. ${list.name}`).join('\n');
+
+    const keyboard = lists.map(list => [{
+        text: `Открыть "${list.name}"`,
+        callback_data: `open_list:${list.id}`
+    }]);
+
+    // Добавляем кнопку "Создать поход" в конец списка
+    keyboard.push([{
+        text: '➕ Создать новый поход',
+        callback_data: 'create_new_list'
+    }]);
+
+    const messageOptions = { 
+        parse_mode: 'Markdown' as const,
+        reply_markup: {
+            inline_keyboard: keyboard
+        }
+    };
+
+    if (isNewMessage) {
+        return await ctx.reply(message, messageOptions);
+    } else {
+        return await ctx.editMessageText(message, messageOptions);
+    }
+}
 
 export function setupCommands(bot: Telegraf<BotContext>) {
     bot.command('start', async (ctx) => {
@@ -60,23 +92,6 @@ export function setupCommands(bot: Telegraf<BotContext>) {
         if (!userId) return;
 
         const lists = await listService.getUserLists(userId);
-
-        if (lists.length === 0) {
-            await ctx.reply('У тебя пока нет списков. Создай новый с помощью /newlist');
-            return;
-        }
-
-        const message = '*Твои списки:*\n\n' + 
-            lists.map((list, i) => `${i + 1}. ${list.name}`).join('\n');
-
-        await ctx.reply(message, { 
-            parse_mode: 'Markdown',
-            reply_markup: {
-                inline_keyboard: lists.map(list => [{
-                    text: `Открыть "${list.name}"`,
-                    callback_data: `open_list:${list.id}`
-                }])
-            }
-        });
+        await displayListsMessage(ctx, lists);
     });
 }

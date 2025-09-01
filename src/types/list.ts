@@ -1,4 +1,4 @@
-import { Dish } from './dish';
+import { Meal } from './meal';
 
 export interface CampingConditions {
     rain: boolean;
@@ -8,13 +8,13 @@ export interface CampingConditions {
 }
 
 export interface CampingList {
-    id: string;
+    id: number;
     userId: string;
     name: string;
     conditions: CampingConditions;
     people: number;
     days: number;
-    dishes: Dish[];
+    meals: Meal[];
     createdAt: Date;
     updatedAt: Date;
 }

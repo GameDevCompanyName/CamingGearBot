@@ -11,12 +11,14 @@ export interface DefaultGearItem {
     item: Gear;
 }
 
+export interface DefaultProductItem {
+    dependantOnPeople: boolean;
+    item: Gear;
+}
+
 export interface GearSet {
     gear: DefaultGearItem[];
-    products: {
-        dependantOnPeople: boolean;
-        item: Product;
-    }[];
+    products: Product[];
 }
 
 export interface DefaultGear {

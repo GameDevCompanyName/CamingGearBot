@@ -1,25 +1,11 @@
-import { CampingList, Gear, Product, DefaultGear, Unit, GearSet } from '../types';
+import { CampingList, Gear, Product, DefaultGear, Unit, GearSet, DefaultGearItem } from '../types';
 import defaultGearData from '../data/defaultGear.json';
-
-// Helper function to ensure type safety for units
-function ensureUnit(unit: string): Unit {
-    if (unit === "ШТ" || unit === "КГ" || unit === "Л") {
-        return unit;
-    }
-    throw new Error(`Invalid unit: ${unit}`);
-}
 
 class CalculatorService {
     private defaultGear: DefaultGear = {
         baseGear: {
             gear: defaultGearData.baseGear.gear,
-            products: defaultGearData.baseGear.products.map(p => ({
-                ...p,
-                item: {
-                    ...p.item,
-                    unit: ensureUnit(p.item.unit)
-                }
-            }))
+            products: defaultGearData.baseGear.products as Product[]
         },
         conditionalGear: {
             rain: defaultGearData.conditionalGear.rain,
@@ -28,31 +14,19 @@ class CalculatorService {
         temperatureGear: {
             cold: {
                 gear: defaultGearData.temperatureGear.cold.gear,
-                products: defaultGearData.temperatureGear.cold.products || []
+                products: defaultGearData.temperatureGear.cold.products as Product[]
             },
             cool: {
                 gear: defaultGearData.temperatureGear.cool.gear,
-                products: defaultGearData.temperatureGear.cool.products || []
+                products: defaultGearData.temperatureGear.cool.products as Product[]
             },
             warm: {
                 gear: defaultGearData.temperatureGear.warm.gear,
-                products: defaultGearData.temperatureGear.warm.products.map(p => ({
-                    ...p,
-                    item: {
-                        ...p.item,
-                        unit: ensureUnit(p.item.unit)
-                    }
-                }))
+                products: defaultGearData.temperatureGear.warm.products as Product[]
             },
             hot: {
                 gear: defaultGearData.temperatureGear.hot.gear,
-                products: defaultGearData.temperatureGear.hot.products.map(p => ({
-                    ...p,
-                    item: {
-                        ...p.item,
-                        unit: ensureUnit(p.item.unit)
-                    }
-                }))
+                products: defaultGearData.temperatureGear.hot.products as Product[]
             }
         }
     };
@@ -61,114 +35,52 @@ class CalculatorService {
         const gear: Gear[] = [];
         const products: Product[] = [];
 
-        // Add base gear and products
-        this.addItems(this.defaultGear.baseGear, list.people, gear, products);
+        // Базово необходимые вещи и продукты для любого похода
+        this.addDefaultGear(list, gear, this.defaultGear.baseGear.gear);
+        this.addProducts(list, products, this.defaultGear.baseGear.products);
 
-        // Add condition-specific items
+        // Вещи необходимые для определенных условий
         this.addConditionItems(list, gear, products);
 
-        // Add temperature-specific items
+        // Вещи специфичные для температуры
         this.addTemperatureItems(list, gear, products);
 
-        // Add gear from dishes (no duplicates)
-        this.addDishGear(list, gear);
-
-        // Add products from dishes (sum quantities)
-        this.addDishProducts(list, products);
+        // Добавляем все снаряжение и продукты для блюд
+        this.addDishes(list, gear, products);
 
         return { gear, products };
     }
 
-    private addItems(gearSet: GearSet, people: number, gear: Gear[], products: Product[]): void {
-        // Add gear
-        for (const gearItem of gearSet.gear) {
-            const qty = gearItem.dependantOnPeople ? gearItem.item.qty * people : gearItem.item.qty;
-            const existingGear = gear.find(g => g.name === gearItem.item.name);
-            
-            if (existingGear) {
-                existingGear.qty += qty;
-            } else {
-                gear.push({ ...gearItem.item, qty });
-            }
-        }
-
-        // Add products
-        for (const productItem of gearSet.products) {
-            const qty = productItem.dependantOnPeople ? productItem.item.qty * people : productItem.item.qty;
-            const existingProduct = products.find(p => 
-                p.name === productItem.item.name && 
-                p.unit === productItem.item.unit
-            );
-            
-            if (existingProduct) {
-                existingProduct.qty += qty;
-            } else {
-                products.push({ ...productItem.item, qty });
-            }
-        }
-    }
-
-    private addConditionItems(list: CampingList, gear: Gear[], products: Product[]): void {
+    private addConditionItems(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         if (list.conditions.rain) {
-            this.addItems(this.defaultGear.conditionalGear.rain, list.people, gear, products);
+            this.addDefaultGear(list, finalGear, this.defaultGear.conditionalGear.rain.gear);
+            this.addProducts(list, finalProducts, this.defaultGear.conditionalGear.rain.products);
         }
 
         if (list.conditions.swimming) {
-            this.addItems(this.defaultGear.conditionalGear.swimming, list.people, gear, products);
+            this.addDefaultGear(list, finalGear, this.defaultGear.conditionalGear.swimming.gear);
+            this.addProducts(list, finalProducts, this.defaultGear.conditionalGear.swimming.products);
         }
     }
 
-    private addTemperatureItems(list: CampingList, gear: Gear[], products: Product[]): void {
+    private addTemperatureItems(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         // Добавляем снаряжение для текущей температуры
-        this.addItems(this.defaultGear.temperatureGear[list.conditions.temperature], list.people, gear, products);
-
-        // Если холодно, добавляем также снаряжение для прохладной погоды
-        if (list.conditions.temperature === 'cold') {
-            this.addItems(this.defaultGear.temperatureGear.cool, list.people, gear, products);
-        }
+        this.addDefaultGear(list, finalGear, this.defaultGear.temperatureGear[list.conditions.temperature].gear);
+        this.addProducts(list, finalProducts, this.defaultGear.temperatureGear[list.conditions.temperature].products);
     }
 
-    private addDishGear(list: CampingList, gear: Gear[]): void {
-        const uniqueGear = new Map<string, Gear>();
-        
+    private addDishes(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         for (const meal of list.meals) {
-            for (const dishGear of meal.dish.gear) {
-                if (!uniqueGear.has(dishGear.name)) {
-                    uniqueGear.set(dishGear.name, { ...dishGear });
-                }
-            }
-        }
-
-        gear.push(...Array.from(uniqueGear.values()));
-    }
-
-    private addDishProducts(list: CampingList, products: Product[]): void {
-        for (const meal of list.meals) {
-            for (const dishProduct of meal.dish.products) {
-                const existingProduct = products.find(p => 
-                    p.name === dishProduct.name && 
-                    p.unit === dishProduct.unit
-                );
-
-                const qty = dishProduct.qty * list.people;
-                
-                if (existingProduct) {
-                    existingProduct.qty += qty;
-                } else {
-                    products.push({
-                        ...dishProduct,
-                        qty
-                    });
-                }
-            }
+            this.addGear(list, finalGear, meal.dish.gear);
+            this.addProducts(list, finalProducts, meal.dish.products);
         }
     }
 
     formatFinalList(list: CampingList): string {
         const { gear, products } = this.calculateFinalList(list);
-        
+
         let output = `*${list.name}*\n\n`;
-        
+
         output += "*Снаряжение:*\n";
         for (const item of gear) {
             output += `${item.emoji} ${item.name}: ${item.qty} шт.\n`;
@@ -181,6 +93,64 @@ class CalculatorService {
 
         return output;
     }
+
+    private addDefaultGear(
+        list: CampingList,
+        finalGear: Gear[],
+        defaultGearToAdd: DefaultGearItem[]
+    ): void {
+        for (const gearItem of defaultGearToAdd) {
+            const qty = gearItem.dependantOnPeople ? gearItem.item.qty * list.people : gearItem.item.qty;
+            const existingGear = finalGear.find(g => g.name === gearItem.item.name);
+
+            if (existingGear) {
+                existingGear.qty = Math.max(existingGear.qty, qty);
+            } else {
+                finalGear.push({ ...gearItem.item, qty });
+            }
+        }
+    }
+
+    private addGear(
+        list: CampingList,
+        finalGear: Gear[],
+        gearToAdd: Gear[]
+    ): void {
+        for (const gearItem of gearToAdd) {
+            const qty = gearItem.qty;
+            const existingGear = finalGear.find(g => g.name === gearItem.name);
+
+            if (existingGear) {
+                existingGear.qty = Math.max(existingGear.qty, qty);
+            } else {
+                finalGear.push({ ...gearItem, qty });
+            }
+        }
+    }
+
+    private addProducts(
+        list: CampingList,
+        finalProducts: Product[],
+        productsToAdd: Product[]
+    ): void {
+
+        // Add products
+        for (const product of productsToAdd) {
+            const qty = product.qty * list.people;
+
+            const existingProduct = finalProducts.find(p =>
+                p.name === product.name &&
+                p.unit === product.unit
+            );
+
+            if (existingProduct) {
+                existingProduct.qty += qty;
+            } else {
+                finalProducts.push({ ...product, qty });
+            }
+        }
+    }
+
 }
 
 export const calculatorService = new CalculatorService();

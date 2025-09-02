@@ -116,49 +116,34 @@
     ],
     "products": [
       {
-        "dependantOnPeople": true,
-        "item": {
           "name": "Вода",
           "qty": 2,
           "unit": "Л",
           "emoji": "💧"
-        }
       },
       {
-        "dependantOnPeople": true,
-        "item": {
-          "name": "Туалетная бумага",
-          "qty": 1,
-          "unit": "ШТ",
-          "emoji": "🧻"
-        }
+        "name": "Туалетная бумага",
+        "qty": 1,
+        "unit": "ШТ",
+        "emoji": "🧻"
       },
       {
-        "dependantOnPeople": false,
-        "item": {
-          "name": "Соль",
-          "qty": 0.1,
-          "unit": "КГ",
-          "emoji": "🧂"
-        }
+        "name": "Соль",
+        "qty": 0.1,
+        "unit": "КГ",
+        "emoji": "🧂"
       },
       {
-        "dependantOnPeople": false,
-        "item": {
-          "name": "Чай",
-          "qty": 0.05,
-          "unit": "КГ",
-          "emoji": "🍵"
-        }
+        "name": "Чай",
+        "qty": 0.05,
+        "unit": "КГ",
+        "emoji": "🍵"
       },
       {
-        "dependantOnPeople": false,
-        "item": {
-          "name": "Сахар",
-          "qty": 0.2,
-          "unit": "КГ",
-          "emoji": "🍬"
-        }
+        "name": "Сахар",
+        "qty": 0.2,
+        "unit": "КГ",
+        "emoji": "🍬"
       }
     ]
   },
@@ -299,13 +284,10 @@
       ],
       "products": [
         {
-          "dependantOnPeople": true,
-          "item": {
-            "name": "Вода",
-            "qty": 1,
-            "unit": "Л",
-            "emoji": "💧"
-          }
+          "name": "Вода",
+          "qty": 1,
+          "unit": "Л",
+          "emoji": "💧"
         }
       ]
     },
@@ -338,13 +320,10 @@
       ],
       "products": [
         {
-          "dependantOnPeople": true,
-          "item": {
-            "name": "Вода",
-            "qty": 2,
-            "unit": "Л",
-            "emoji": "💧"
-          }
+          "name": "Вода",
+          "qty": 2,
+          "unit": "Л",
+          "emoji": "💧"
         }
       ]
     }

@@ -1,7 +1,12 @@
 import { CampingList, Gear, Product, DefaultGear, Unit, GearSet, DefaultGearItem } from '../types';
 import defaultGearData from '../data/defaultGear.json';
 
+/**
+ * Сервис для расчета необходимого снаряжения и продуктов
+ * на основе условий похода и базового набора
+ */
 class CalculatorService {
+    /** Базовый набор снаряжения и продуктов с учетом условий */
     private defaultGear: DefaultGear = {
         baseGear: {
             gear: defaultGearData.baseGear.gear,
@@ -31,6 +36,11 @@ class CalculatorService {
         }
     };
 
+    /**
+     * Рассчитывает финальный список снаряжения и продуктов для похода
+     * @param list - Список похода с условиями и участниками
+     * @returns Объект с массивами снаряжения и продуктов
+     */
     calculateFinalList(list: CampingList): { gear: Gear[], products: Product[] } {
         const gear: Gear[] = [];
         const products: Product[] = [];
@@ -51,6 +61,12 @@ class CalculatorService {
         return { gear, products };
     }
 
+    /**
+     * Добавляет снаряжение и продукты в зависимости от условий похода
+     * @param list - Список похода
+     * @param finalGear - Массив снаряжения для дополнения
+     * @param finalProducts - Массив продуктов для дополнения
+     */
     private addConditionItems(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         if (list.conditions.rain) {
             this.addDefaultGear(list, finalGear, this.defaultGear.conditionalGear.rain.gear);
@@ -63,12 +79,24 @@ class CalculatorService {
         }
     }
 
+    /**
+     * Добавляет снаряжение и продукты в зависимости от температурных условий
+     * @param list - Список похода
+     * @param finalGear - Массив снаряжения для дополнения
+     * @param finalProducts - Массив продуктов для дополнения
+     */
     private addTemperatureItems(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         // Добавляем снаряжение для текущей температуры
         this.addDefaultGear(list, finalGear, this.defaultGear.temperatureGear[list.conditions.temperature].gear);
         this.addProducts(list, finalProducts, this.defaultGear.temperatureGear[list.conditions.temperature].products);
     }
 
+    /**
+     * Добавляет снаряжение и продукты для всех запланированных блюд
+     * @param list - Список похода
+     * @param finalGear - Массив снаряжения для дополнения
+     * @param finalProducts - Массив продуктов для дополнения
+     */
     private addDishes(list: CampingList, finalGear: Gear[], finalProducts: Product[]): void {
         for (const meal of list.meals) {
             this.addGear(list, finalGear, meal.dish.gear);
@@ -76,6 +104,11 @@ class CalculatorService {
         }
     }
 
+    /**
+     * Форматирует финальный список снаряжения и продуктов в текстовое сообщение
+     * @param list - Список похода
+     * @returns Отформатированный текст сообщения в формате Markdown
+     */
     formatFinalList(list: CampingList): string {
         const { gear, products } = this.calculateFinalList(list);
 
@@ -94,6 +127,12 @@ class CalculatorService {
         return output;
     }
 
+    /**
+     * Добавляет базовое снаряжение с учетом зависимости от количества людей
+     * @param list - Список похода
+     * @param finalGear - Массив снаряжения для дополнения
+     * @param defaultGearToAdd - Массив базового снаряжения для добавления
+     */
     private addDefaultGear(
         list: CampingList,
         finalGear: Gear[],
@@ -111,6 +150,12 @@ class CalculatorService {
         }
     }
 
+    /**
+     * Добавляет снаряжение из блюд с суммированием количества
+     * @param list - Список похода
+     * @param finalGear - Массив снаряжения для дополнения
+     * @param gearToAdd - Массив снаряжения для добавления
+     */
     private addGear(
         list: CampingList,
         finalGear: Gear[],

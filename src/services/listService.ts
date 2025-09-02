@@ -3,9 +3,16 @@ import { storageService } from './storage';
 import dishesData from '../data/dishes.json';
 
 
+/**
+ * Сервис для управления списками походов
+ * Обеспечивает создание, редактирование и валидацию списков
+ */
 class ListService {
+    /** Максимальное количество списков для одного пользователя */
     private readonly MAX_LISTS_PER_USER = 10;
+    /** Максимальная продолжительность похода в днях */
     private readonly MAX_DAYS = 14;
+    /** Максимальное количество участников */
     private readonly MAX_PEOPLE = 30;
 
     async createNewList(userId: string): Promise<CampingList | null> {

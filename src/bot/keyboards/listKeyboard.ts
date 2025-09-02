@@ -30,9 +30,9 @@ export function getConditionsKeyboard(listId: number): InlineKeyboardMarkup {
                 { text: "☔ Дождь", callback_data: `toggle_rain:${listId}` },
                 { text: "🏊‍♂️ Купание", callback_data: `toggle_swimming:${listId}` }
             ],
-            [
-                { text: "⚖️ Минимизация веса", callback_data: `toggle_weight:${listId}` }
-            ],
+            // [
+            //     { text: "⚖️ Минимизация веса", callback_data: `toggle_weight:${listId}` }
+            // ],
             [
                 { text: "❄️ Холодно", callback_data: `set_temp:cold:${listId}` },
                 { text: "🌡️ Прохладно", callback_data: `set_temp:cool:${listId}` }
